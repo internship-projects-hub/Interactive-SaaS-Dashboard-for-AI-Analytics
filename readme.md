@@ -1,6 +1,6 @@
 # 🚀 Interactive SaaS Dashboard for AI Analytics
 
-Lightweight frontend demo dashboard showcasing UX, animated visuals, and data charts.
+This is Lightweight frontend demo dashboard showcasing UX, animated visuals, and data charts.
 
 ---
 
