@@ -20,7 +20,7 @@ This is Lightweight frontend demo dashboard showcasing UX, animated visuals, and
 
 ## About
 
-This repository contains a single-page interactive dashboard built with HTML, CSS and JavaScript. It demonstrates layout inspection, Chart.js visualizations and a Three.js animated background.
+This repository contains only one single-page interactive dashboard built with HTML, CSS and JavaScript. It demonstrates layout inspection, Chart.js visualizations and a Three.js animated background.
 
 **Author:** Dilip Singh (Frontend Developer)
 
