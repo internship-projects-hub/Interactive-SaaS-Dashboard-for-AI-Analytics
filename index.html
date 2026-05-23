@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaaS Information Architecture Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Slate & Indigo Harmony -->
+    <!-- Application Structure Plan: 
+        The SPA is designed as a "Technical Dashboard for Dashboards." 
+        1. Hero Section: Introduces the core concept of the 'Structural Backbone'.
+        2. Interactive Layout Inspector: A visual mockup of the dashboard layout where users can click areas (Sidebar, Nav, Main) to see the specific semantic details and roles from the report.
+        3. Benefits Data Visualization: A Chart.js radar chart comparing the impact of this approach on Accessibility, SEO, Performance, and DX.
+        4. Deep Dive Matrix: A filterable grid of semantic elements and their industry-standard roles.
+        This structure was chosen to transform static documentation into a spatial learning experience, helping developers visualize the mapping between code and UI.
+    -->
+    <!-- Visualization & Content Choices: 
+        - Layout Inspector -> Interactive Visual Map -> Goal: Change/Organize -> Custom HTML/CSS structure with JS state updates to display report details.
+        - Benefits Comparison -> Radar Chart (Chart.js) -> Goal: Compare -> Displays the high-level impact of the architectural choices.
+        - Semantic Matrix -> Interactive Grid -> Goal: Organize -> Detailed breakdown of HTML5 tags.
+        - Confirmation: NO SVG graphics used. NO Mermaid JS used. Visuals created with Tailwind and Chart.js Canvas.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .inspector-box {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .inspector-box:hover {
+            filter: brightness(0.9);
+            transform: scale(1.01);
+        }
+        .inspector-box.active {
+            outline: 3px solid #6366f1;
+            outline-offset: -3px;
+            background-color: #eef2ff !important;
+        }
+        body {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="text-slate-800 font-sans leading-relaxed">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center text-white font-bold text-xs">IA</div>
+                    <span class="font-bold text-slate-900 tracking-tight">SaaS Structural Docs</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-slate-500">
+                    <a href="#inspector" class="hover:text-indigo-600 transition">Layout Inspector</a>
+                    <a href="#benefits" class="hover:text-indigo-600 transition">Benefits Analysis</a>
+                    <a href="#matrix" class="hover:text-indigo-600 transition">Semantic Matrix</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Introduction -->
+        <header class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">The Modern SaaS Backbone</h1>
+            <p class="max-w-2xl mx-auto text-lg text-slate-600">
+                A professional SaaS dashboard is built on the principle of <strong>Separation of Concerns</strong>. 
+                Explore the structural blueprint that drives accessibility, performance, and maintainability.
+            </p>
+        </header>
+
+        <!-- Layout Inspector Section -->
+        <section id="inspector" class="mb-20">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-slate-900 mb-2">Interactive Layout Inspector</h2>
+                <p class="text-slate-600 mb-8 italic">Click on different regions of the dashboard mockup below to see the technical documentation for each semantic block.</p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Dashboard Mockup -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-slate-100 rounded-lg p-2 border border-slate-300 aspect-video flex gap-2">
+                            <!-- Sidebar -->
+                            <div id="target-sidebar" onclick="app.inspect('sidebar')" class="inspector-box w-1/5 bg-slate-800 rounded flex flex-col items-center py-4 gap-2">
+                                <div class="w-8 h-8 bg-slate-700 rounded-full"></div>
+                                <div class="w-10 h-2 bg-slate-600 rounded"></div>
+                                <div class="w-10 h-2 bg-slate-600 rounded mt-4"></div>
+                                <div class="w-10 h-2 bg-slate-600 rounded"></div>
+                            </div>
+                            
+                            <div class="flex-1 flex flex-col gap-2">
+                                <!-- Top Nav -->
+                                <div id="target-header" onclick="app.inspect('header')" class="inspector-box h-12 bg-white border border-slate-300 rounded flex items-center px-4 justify-between">
+                                    <div class="w-24 h-3 bg-slate-200 rounded"></div>
+                                    <div class="flex gap-2">
+                                        <div class="w-4 h-4 bg-slate-200 rounded-full"></div>
+                                        <div class="w-4 h-4 bg-slate-200 rounded-full"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Main Content -->
+                                <div id="target-main" onclick="app.inspect('main')" class="inspector-box flex-1 bg-slate-50 rounded p-3 flex flex-col gap-4">
+                                    <div class="grid grid-cols-3 gap-3">
+                                        <div onclick="event.stopPropagation(); app.inspect('cards')" id="target-cards" class="inspector-box h-16 bg-white border border-slate-200 rounded shadow-sm flex flex-col justify-center px-2 gap-1">
+                                            <div class="w-1/2 h-1 bg-slate-100 rounded"></div>
+                                            <div class="w-3/4 h-2 bg-indigo-100 rounded"></div>
+                                        </div>
+                                        <div class="h-16 bg-white border border-slate-200 rounded shadow-sm opacity-50"></div>
+                                        <div class="h-16 bg-white border border-slate-200 rounded shadow-sm opacity-50"></div>
+                                    </div>
+                                    <div id="target-charts" onclick="event.stopPropagation(); app.inspect('charts')" class="inspector-box flex-1 bg-white border border-slate-200 rounded shadow-sm flex items-end p-4 gap-2">
+                                        <div class="flex-1 bg-indigo-50 rounded-t h-1/2"></div>
+                                        <div class="flex-1 bg-indigo-100 rounded-t h-3/4"></div>
+                                        <div class="flex-1 bg-indigo-50 rounded-t h-2/3"></div>
+                                        <div class="flex-1 bg-indigo-100 rounded-t h-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inspector Detail Panel -->
+                    <div class="bg-indigo-50 rounded-xl p-6 border border-indigo-100" id="detail-panel">
+                        <div id="detail-placeholder" class="h-full flex flex-col justify-center items-center text-center">
+                            <div class="text-indigo-400 mb-4 text-4xl">☝️</div>
+                            <h3 class="text-indigo-900 font-bold mb-1">Select a Component</h3>
+                            <p class="text-indigo-700 text-sm">Choose a highlighted region in the mockup to view its architectural specification.</p>
+                        </div>
+                        <div id="detail-content" class="hidden">
+                            <span id="detail-tag" class="inline-block px-2 py-1 bg-indigo-600 text-white text-[10px] font-mono rounded mb-3"></span>
+                            <h3 id="detail-title" class="text-xl font-bold text-slate-900 mb-2"></h3>
+                            <div id="detail-desc" class="text-slate-700 text-sm space-y-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits & Charts Section -->
+        <section id="benefits" class="mb-20 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Strategic Impact Analysis</h2>
+                <p class="text-slate-600 mb-6">
+                    A semantic structure isn't just about code cleanliness; it has measurable impacts on product success metrics. 
+                    This visualization illustrates the weighting of benefits provided by a strict semantic approach.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 w-5 h-5 rounded bg-indigo-100 flex items-center justify-center text-indigo-600 text-xs">1</div>
+                        <div>
+                            <span class="font-bold block">Performance</span>
+                            <span class="text-sm text-slate-500">Faster parse times and optimized critical rendering paths.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1 w-5 h-5 rounded bg-indigo-100 flex items-center justify-center text-indigo-600 text-xs">2</div>
+                        <div>
+                            <span class="font-bold block">Developer Experience</span>
+                            <span class="text-sm text-slate-500">Accelerated debugging and team onboarding.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="chart-container">
+                    <canvas id="benefitsChart"></canvas>
+                </div>
+                <p class="text-center text-xs text-slate-400 mt-4">Qualitative Benefit Weighting (Relative Scale 0-100)</p>
+            </div>
+        </section>
+
+        <!-- Matrix / Glossary Section -->
+        <section id="matrix">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-2">The Semantic Matrix</h2>
+                    <p class="text-slate-600">A comprehensive mapping of HTML5 elements to dashboard roles.</p>
+                </div>
+                <div class="flex bg-slate-200 p-1 rounded-lg text-xs font-bold">
+                    <button onclick="app.filterMatrix('all')" class="matrix-filter px-4 py-2 rounded-md bg-white shadow-sm transition active" id="filter-all">All</button>
+                    <button onclick="app.filterMatrix('nav')" class="matrix-filter px-4 py-2 rounded-md transition" id="filter-nav">Navigation</button>
+                    <button onclick="app.filterMatrix('content')" class="matrix-filter px-4 py-2 rounded-md transition" id="filter-content">Content</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="matrix-grid">
+                <!-- Grid Items Generated by JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-white py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="text-indigo-400 font-mono text-sm mb-4">&lt;index.html /&gt;</div>
+            <p class="text-slate-400 text-sm mb-8">Generated for Technical Documentation & Architecture Planning</p>
+            <div class="w-16 h-1 bg-indigo-600 mx-auto rounded-full mb-8"></div>
+            <p class="text-xs text-slate-500">Built with Chart.js and Tailwind CSS. No SVGs or Mermaid.js utilized.</p>
+        </div>
+    </footer>
+
+    <script>
+        const app = {
+            state: {
+                activeComponent: null,
+                filter: 'all'
+            },
+            data: {
+                components: {
+                    sidebar: {
+                        tag: '<aside>',
+                        title: 'Sidebar Navigation',
+                        description: 'Positioned on the left, the sidebar functions as the primary hub. It utilizes <nav> and <ul> tags to ensure screen readers can identify navigation paths instantly.'
+                    },
+                    header: {
+                        tag: '<header>',
+                        title: 'Top Navigation Bar',
+                        description: 'Provides global utilities like breadcrumbs, search, and profile dropdowns. It acts as the introductory viewport section.'
+                    },
+                    main: {
+                        tag: '<main>',
+                        title: 'Main Content Area',
+                        description: 'The core workspace of the dashboard. This element signals to assistive technologies that this region contains the unique content of the active route.'
+                    },
+                    cards: {
+                        tag: '<section> + <article>',
+                        title: 'Analytics Cards',
+                        description: 'Organized under a <section> for KPI metrics. Each individual card is an <article>, emphasizing its role as a self-contained informational block.'
+                    },
+                    charts: {
+                        tag: '<section> + <canvas>',
+                        title: 'Visual Reporting',
+                        description: 'A dedicated area for interactive charts. Uses semantic containers that allow external libraries like Chart.js to target specific regions without breaking layout.'
+                    }
+                },
+                matrix: [
+                    { tag: '<nav>', role: 'Navigation Hub', category: 'nav', desc: 'Used within headers or asides for primary links.' },
+                    { tag: '<header>', role: 'Introductory Content', category: 'nav', desc: 'Wraps the top bar and contextual info.' },
+                    { tag: '<main>', role: 'Central Purpose', category: 'content', desc: 'The unique content that defines the page.' },
+                    { tag: '<aside>', role: 'Tangential Info', category: 'nav', desc: 'Used for sidebars and sidebar tools.' },
+                    { tag: '<section>', role: 'Logical Grouping', category: 'content', desc: 'Groups related data points like metrics.' },
+                    { tag: '<article>', role: 'Self-Contained Item', category: 'content', desc: 'Individual KPI cards or log entries.' },
+                    { tag: '<footer>', role: 'Global Status', category: 'nav', desc: 'Copyrights or platform status info.' },
+                    { tag: '<h1>-<h6>', role: 'Hierarchy Markers', category: 'content', desc: 'Defines the structural order of data.' }
+                ]
+            },
+
+            init() {
+                this.renderMatrix();
+                this.initChart();
+            },
+
+            inspect(key) {
+                this.state.activeComponent = key;
+                const comp = this.data.components[key];
+                
+                // Update visuals
+                document.querySelectorAll('.inspector-box').forEach(el => el.classList.remove('active'));
+                document.getElementById(`target-${key}`).classList.add('active');
+
+                // Update text
+                document.getElementById('detail-placeholder').classList.add('hidden');
+                document.getElementById('detail-content').classList.remove('hidden');
+                document.getElementById('detail-tag').innerText = comp.tag;
+                document.getElementById('detail-title').innerText = comp.title;
+                document.getElementById('detail-desc').innerHTML = `<p>${comp.description}</p>`;
+            },
+
+            renderMatrix() {
+                const grid = document.getElementById('matrix-grid');
+                grid.innerHTML = '';
+                
+                this.data.matrix.forEach(item => {
+                    if (this.state.filter !== 'all' && item.category !== this.state.filter) return;
+                    
+                    const div = document.createElement('div');
+                    div.className = 'bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-indigo-300 transition';
+                    div.innerHTML = `
+                        <div class="text-xs font-mono text-indigo-600 mb-2">${item.tag}</div>
+                        <div class="font-bold text-slate-900 mb-1">${item.role}</div>
+                        <div class="text-xs text-slate-500">${item.desc}</div>
+                    `;
+                    grid.appendChild(div);
+                });
+            },
+
+            filterMatrix(category) {
+                this.state.filter = category;
+                document.querySelectorAll('.matrix-filter').forEach(btn => btn.classList.remove('active', 'bg-white', 'shadow-sm'));
+                const activeBtn = document.getElementById(`filter-${category}`);
+                activeBtn.classList.add('active', 'bg-white', 'shadow-sm');
+                this.renderMatrix();
+            },
+
+            initChart() {
+                const ctx = document.getElementById('benefitsChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Accessibility', 'Performance', 'SEO', 'Dev Experience', 'Maintainability', 'Semantic Clarity'],
+                        datasets: [{
+                            label: 'Impact Score',
+                            data: [95, 88, 80, 92, 90, 100],
+                            backgroundColor: 'rgba(99, 102, 241, 0.2)',
+                            borderColor: 'rgba(99, 102, 241, 1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: 'rgba(99, 102, 241, 1)',
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: { display: false },
+                                grid: { color: '#e2e8f0' },
+                                angleLines: { color: '#e2e8f0' },
+                                pointLabels: {
+                                    font: { size: 10, weight: '600' },
+                                    color: '#64748b'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: '#1e293b',
+                                titleFont: { size: 12 },
+                                padding: 12
+                            }
+                        }
+                    }
+                });
+            }
+        };
+
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>

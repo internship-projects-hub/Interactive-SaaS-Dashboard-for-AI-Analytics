@@ -1,0 +1,137 @@
+/* ===============================
+   SaaS Dashboard - Global Styles
+================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+}
+
+/* ===============================
+   Sidebar
+================================= */
+
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: #111827;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  color: #38bdf8;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  color: #cbd5e1;
+  text-decoration: none;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background: #1f2937;
+  color: white;
+}
+
+/* ===============================
+   Main Content
+================================= */
+
+.main {
+  margin-left: 220px;
+  padding: 20px;
+  width: 100%;
+}
+
+/* ===============================
+   Navbar
+================================= */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.navbar h1 {
+  font-size: 22px;
+}
+
+/* ===============================
+   Cards
+================================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #273449;
+}
+
+/* ===============================
+   Charts Section
+================================= */
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+canvas {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* ===============================
+   Responsive Design
+================================= */
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 180px;
+  }
+
+  .main {
+    margin-left: 180px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .charts {
+    grid-template-columns: 1fr;
+  }
+}
